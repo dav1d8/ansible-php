@@ -2,3 +2,4 @@ galaxy_info:
   author: David Baranyai
   description: An Ansible role for installing PHP.
   license: Apache
+  categories: php
