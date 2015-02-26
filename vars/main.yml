@@ -1,0 +1,18 @@
+php_packages:
+  - php5
+
+php_extension_packages: []
+
+php_extensions_for_apache: []
+php_extensions_for_cli: []
+
+php_conf_path_apache: /etc/php5/apache2
+php_conf_path_cli: /etc/php5/cli
+
+php_ini_params_apache:
+  mbstring.internal_encoding: "UTF-8"
+  date.timezone: "UTC"
+
+php_ini_params_cli:
+  mbstring.internal_encoding: "UTF-8"
+  date.timezone: "UTC"

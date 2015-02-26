@@ -1,0 +1,23 @@
+- name: Ensure PHP packages are installed
+  apt: name={{item}} state=latest
+  with_items: php_packages
+
+- name: Ensure PHP extension packages are installed
+  apt: name={{item}} state=latest
+  with_items: php_extension_packages
+
+- name: Ensure params in php.ini (apache version)
+  lineinfile: dest={{ php_conf_path_apache }}/php.ini regexp="{{ item.key }} = " line="{{ item.key }} = {{ item.value }}"
+  with_dict: php_ini_params_apache
+
+- name: Ensure extensions in php.ini (apache version)
+  lineinfile: dest={{ php_conf_path_apache }}/php.ini line="extension={{ item }}.so"
+  with_items: php_extensions_for_apache
+
+- name: Ensure params in php.ini (cli version)
+  lineinfile: dest={{ php_conf_path_cli }}/php.ini regexp="{{ item.key }} = " line="{{ item.key }} = {{ item.value }}"
+  with_dict: php_ini_params_cli
+
+- name: Ensure extensions in php.ini (cli version)
+  lineinfile: dest={{ php_conf_path_cli }}/php.ini line="extension={{ item }}.so"
+  with_items: php_extensions_for_cli
