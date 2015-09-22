@@ -1,5 +1,5 @@
 - name: Ensure PHP packages are installed
-  apt: name={{item}} state=latest
+  apt: name={{item}} state=latest update_cache=yes
   with_items: php_packages
 
 - name: Ensure PHP extension packages are installed
