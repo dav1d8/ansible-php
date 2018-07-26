@@ -1,23 +1,23 @@
 - name: Ensure PHP packages are installed
   apt: name={{item}} state=latest
-  with_items: php_packages
+  loop: "{{ php_packages|flatten(levels=1) }}"
 
 - name: Ensure PHP extension packages are installed
   apt: name={{item}} state=latest
-  with_items: php_extension_packages
+  loop: "{{ php_extension_packages|flatten(levels=1) }}"
 
 - name: Ensure params in php.ini (apache version)
   lineinfile: dest={{ php_conf_path_apache }}/php.ini regexp="{{ item.key }} = " line="{{ item.key }} = {{ item.value }}"
-  with_dict: php_ini_params_apache
+  loop: "{{ php_ini_params_apache|dict2items }}"
 
 - name: Ensure extensions in php.ini (apache version)
   lineinfile: dest={{ php_conf_path_apache }}/php.ini line="extension={{ item }}.so"
-  with_items: php_extensions_for_apache
+  loop: "{{ php_extensions_for_apache|flatten(levels=1) }}"
 
 - name: Ensure params in php.ini (cli version)
   lineinfile: dest={{ php_conf_path_cli }}/php.ini regexp="{{ item.key }} = " line="{{ item.key }} = {{ item.value }}"
-  with_dict: php_ini_params_cli
+  loop: "{{ php_ini_params_cli|dict2items }}"
 
 - name: Ensure extensions in php.ini (cli version)
   lineinfile: dest={{ php_conf_path_cli }}/php.ini line="extension={{ item }}.so"
-  with_items: php_extensions_for_cli
+  loop: "{{ php_extensions_for_cli|flatten(levels=1) }}"
